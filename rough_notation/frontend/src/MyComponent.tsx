@@ -19,17 +19,14 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
     super(props);
     this.state = { is_hovering: false, is_selected: false
     };
-    this.node = React.createRef();
+    this.node = null;
   }
-  componentDidMount() {
-    this.node.scrollIntoView();
-  }
+
   private _onMouseClick = (index: any, onMouseClick: any) => {
 
     this.setState({ is_selected: true });
     onMouseClick(index);
   }
-
   render() {
     const props:any = this.props;
     const is_hovering = this.state.is_hovering;
@@ -44,9 +41,12 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
     } = props;
     
     const _index_is_selected = index_is_selected()==index;
-    // if we are selected, scroll into view using react ref
+    
     if (_index_is_selected){
-      this.node.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      
+      if (this.node) {
+        this.node.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
 
     
       
@@ -57,7 +57,8 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
         onMouseLeave={() => this.setState({ is_hovering: false })}
         onClick={() => this._onMouseClick(index, onMouseClick)}
         show={_index_is_selected || is_hovering} >
-      </RoughNotation> &nbsp; </span>
+      </RoughNotation> &nbsp;  <div ref={node => (this.node = node)}>
+      </div>  </span>
     )   
   }    
 }
