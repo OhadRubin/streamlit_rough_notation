@@ -70,8 +70,8 @@ def rough_notation(name, default=0,key=None):
     #
     # "default" is a special argument that specifies the initial return
     # value of the component before the user has interacted with it.
-    assert isinstance(default, int)
-    component_value = _component_func(name=name, key=key, default=default)
+    
+    component_value = _component_func(name=name, key=key, default=int(default))
 
     # We could modify the value returned from the component if we wanted.
     # There's no need to do this in our simple example - but it's an option.
