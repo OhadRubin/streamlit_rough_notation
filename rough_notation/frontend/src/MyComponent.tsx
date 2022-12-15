@@ -85,7 +85,7 @@ function HigherFunc(props:any) {
       />
     )
   };
-  // set_my_hook(scrollToId);
+  set_my_hook(scrollToId);
 
 
   return (<span>{values.map(_func)}</span>)
