@@ -14,11 +14,11 @@ interface State {
   is_selected: number
 }
 // here we need to modify to add the _ref
-class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_selected: boolean, ref: React.RefObject<any>}> {
+class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_selected: boolean}> {
   constructor(props:any) {
     super(props);
     this.state = {
-      is_hovering: false, is_selected: false, ref: React.createRef()
+      is_hovering: false, is_selected: false
     };
   }
   private _onMouseClick = (index: any, onMouseClick: any) => {
@@ -62,7 +62,7 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
 
     
     return (<span>
-      <RoughNotation {...rest} type='underline' ref={this.state.ref}
+      <RoughNotation {...rest} type='underline'
         onMouseEnter={() => this.setState({ is_hovering: true })}
         onMouseLeave={() => this.setState({ is_hovering: false })}
         onClick={() => this._onMouseClick(index, onMouseClick)}
