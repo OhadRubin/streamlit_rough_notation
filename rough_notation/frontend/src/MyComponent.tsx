@@ -6,6 +6,7 @@ import {
 import React, { ReactNode } from "react"
 import { RoughNotation } from "react-rough-notation";
 import { Map } from "typescript";
+import { useState, useEffect } from 'react';
 
 interface State {
   isFocused: boolean
@@ -86,7 +87,9 @@ function HigherFunc(props:any) {
     )
   };
   const res = values.map(_func)
-  set_my_hook(scrollToId);
+  useEffect(
+    () => { set_my_hook(scrollToId); });
+  
 
   return (<span>{res}</span>)
 }
@@ -95,8 +98,6 @@ function HigherFunc(props:any) {
 
 
 class MyComponent extends StreamlitComponentBase<State> {
-  // ref_list: React.Ref = [];
-  // public itemsRef =  React.useRef(null) 
   public state = {
     isFocused: false, is_selected: -1, my_callback: (i: any) => { }     
     }; 
