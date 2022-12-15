@@ -10,6 +10,8 @@ setuptools.setup(
     long_description_content_type="text/plain",
     url="",
     packages=["rough_notation","rough_notation/frontend"],
+    package_data={'': ['license.txt']},
+
     include_package_data=True,
     classifiers=[],
     python_requires=">=3.6",
