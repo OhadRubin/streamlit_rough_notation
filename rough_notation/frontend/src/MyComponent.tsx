@@ -44,13 +44,14 @@ function MyRoughNotation(props: any){
   }    
 
 
-function HigherFunc(props:any) {
+export function HigherFunc(props:any) {
   const { values: values, query_is_selected: query_is_selected, _props: _props, set_my_hook: set_my_hook } = props;
   const [has_set_hook, setHook] = React.useState(false);
   const itemsRef:any = React.useRef(null);
   function scrollToId(itemId: any) {
     const map = getMap();
-    const node = map.get(itemId);
+    const node:any = map.get(itemId);
+    console.log(map);
     console.log(node);
     node.scrollIntoView({
       behavior: 'smooth',
@@ -113,6 +114,7 @@ class MyComponent extends StreamlitComponentBase<State> {
   private set_is_selected = (i: any) => {
     if (i >= 0) {
       this.setState({ is_selected: i });
+      console.log("set_is_selected with parameter i=" + i)
       this.state.my_callback(i);
     }
   }
