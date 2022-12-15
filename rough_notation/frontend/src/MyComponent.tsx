@@ -85,10 +85,10 @@ function HigherFunc(props:any) {
       />
     )
   };
+  const res = values.map(_func)
   set_my_hook(scrollToId);
 
-
-  return (<span>{values.map(_func)}</span>)
+  return (<span>{res}</span>)
 }
 
 
@@ -98,9 +98,7 @@ class MyComponent extends StreamlitComponentBase<State> {
   // ref_list: React.Ref = [];
   // public itemsRef =  React.useRef(null) 
   public state = {
-    isFocused: false, is_selected: -1, my_callback: (i: any) => { }
-    // itemsRef: React.useRef(new Map()) 
-     
+    isFocused: false, is_selected: -1, my_callback: (i: any) => { }     
     }; 
   
 
