@@ -10,7 +10,7 @@ setuptools.setup(
     long_description_content_type="text/plain",
     url="",
     packages=["rough_notation"],
-    package_data={'rough_notation': ['rough_notation/frontend']},
+    # package_data={'rough_notation': ['rough_notation/frontend']},
 
     include_package_data=True,
     classifiers=[],
