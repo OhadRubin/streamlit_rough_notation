@@ -72,7 +72,7 @@ def rough_notation(name, selected_index=-1,key=None):
     # value of the component before the user has interacted with it.
     # if selected_index is None:
         # selected_index = -1
-    component_value = _component_func(name=name,selected_index=selected_index, key=key, default=0)
+    component_value = _component_func(name=name,selected_index=int(selected_index), key=key, default=0)
 
     # We could modify the value returned from the component if we wanted.
     # There's no need to do this in our simple example - but it's an option.
