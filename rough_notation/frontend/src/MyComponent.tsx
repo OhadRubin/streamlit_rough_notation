@@ -85,7 +85,9 @@ export function HigherFunc(props:any) {
     return (
       <MyRoughNotation {...rest}
       key={index} 
-        ref={(node: any) => { getMap().set(index, node) ;}}
+        ref={(node: any) => { 
+          console.log("ref called with index=" + index);
+          getMap().set(index, node) ;}}
       />
     )
   };
