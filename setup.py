@@ -9,7 +9,7 @@ setuptools.setup(
     long_description="",
     long_description_content_type="text/plain",
     url="",
-    packages=["rough_notation"],
+    packages=["rough_notation","rough_notation/frontend"],
     include_package_data=True,
     classifiers=[],
     python_requires=">=3.6",
