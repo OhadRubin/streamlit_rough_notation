@@ -13,10 +13,13 @@ interface State {
   is_selected: number
 }
 
-class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_selected: boolean}> {
+class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_selected: boolean, ref: any}> {
   constructor(props:any) {
     super(props);
-    this.state = { is_hovering: false, is_selected : false };
+    this.state = { is_hovering: false, is_selected: false, ref: React.useRef(null) };
+    // const inputEl = ;
+
+
   }
   private _onMouseClick = (index: any, onMouseClick: any) => {
 
@@ -37,13 +40,20 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
     } = props;
     
     const _index_is_selected = index_is_selected()==index;
+    // if we are selected, scroll into view
+    if (_index_is_selected){
+      // const a = React.useRef(this);
+      this.state.ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // a.current.
+      // .current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      
+    }
     return (<span>
       <RoughNotation {...rest} type='underline'
         onMouseEnter={() => this.setState({ is_hovering: true })}
         onMouseLeave={() => this.setState({ is_hovering: false })}
         onClick={() => this._onMouseClick(index, onMouseClick)}
         show={_index_is_selected || is_hovering} >
-        {value}
       </RoughNotation> &nbsp; </span>
     )   
   }    
