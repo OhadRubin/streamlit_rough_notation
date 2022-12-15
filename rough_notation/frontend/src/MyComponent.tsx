@@ -51,6 +51,7 @@ function HigherFunc(props:any) {
   function scrollToId(itemId: any) {
     const map = getMap();
     const node = map.get(itemId);
+    console.log(node);
     node.scrollIntoView({
       behavior: 'smooth',
       block: 'nearest',
