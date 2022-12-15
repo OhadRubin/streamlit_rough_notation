@@ -77,38 +77,40 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
 class MyComponent extends StreamlitComponentBase<State> {
   // ref_list: React.Ref = [];
   // public itemsRef =  React.useRef(null) 
-  public state = { numClicks: 0, isFocused: false, is_hovering: -1, is_selected: -1, itemsRef: React.useRef(new Map()) 
+  public state = { numClicks: 0, isFocused: false, is_hovering: -1, is_selected: -1, 
+    // itemsRef: React.useRef(new Map()) 
      
     }; 
   
 
-  public scrollToId(itemId: any) {
-    const node = this.getMap().get(itemId);
-    node.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'center'
-    });
-  }
-  public getMap(){
-    // this.itemsRef.current.
-    return this.state.itemsRef.current;
-  }
-  public buildRef(node: any, index: any) {
-    let map = this.getMap()
-    if (node) {
-      map.set(index, node);
-    } else {
-      map.delete(index);
-    }
-  }
+  // public scrollToId(itemId: any) {
+  //   const node = this.getMap().get(itemId);
+  //   node.scrollIntoView({
+  //     behavior: 'smooth',
+  //     block: 'nearest',
+  //     inline: 'center'
+  //   });
+  // }
+  // public getMap(){
+  //   // this.itemsRef.current.
+  //   return this.state.itemsRef.current;
+  // }
+  // public buildRef(node: any, index: any) {
+  //   let map = this.getMap()
+  //   if (node) {
+  //     map.set(index, node);
+  //   } else {
+  //     map.delete(index);
+  //   }
+  // }
+
   private get_is_selected = () => {
     return this.state.is_selected;
   }
   private set_is_selected = (i: any) => {
     if (i >= 0) {
       this.setState({ is_selected: i });
-      this.scrollToId(i);
+      // this.scrollToId(i);
     }
 
   }
@@ -158,7 +160,8 @@ class MyComponent extends StreamlitComponentBase<State> {
       };
       return (
         <MyRoughNotation {...rest} 
-          key={index} ref={(node) => this.buildRef(node, index)}
+          key={index} 
+          // ref={(node) => this.buildRef(node, index)}
         />
     )};
     
