@@ -70,8 +70,6 @@ def rough_notation(name, selected_index=None,key=None):
     #
     # "default" is a special argument that specifies the initial return
     # value of the component before the user has interacted with it.
-    if selected_index is None:
-        
     component_value = _component_func(name=name,selected_index=selected_index, key=key, default=0)
 
     # We could modify the value returned from the component if we wanted.
