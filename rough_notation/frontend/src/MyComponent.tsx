@@ -69,14 +69,12 @@ export function HigherFunc(props:any) {
     }
     return itemsRef.current;
   }
-  function buildRef(node: any, index: any) {
-    const map = getMap()
-    if (node) {
-      map.set(index, node);
-    } else {
-      map.delete(index);
-    }
-  }
+  // function buildRef(node: any, index: any) {
+  //   const map = 
+  //   if (node) {
+  //     getMap().set(index, node)
+  //   }
+  // }
   const _func = (value: string, index: any) => {
     const rest = {
       value: value,
@@ -87,7 +85,7 @@ export function HigherFunc(props:any) {
     return (
       <MyRoughNotation {...rest}
       key={index} 
-      ref={(node:any) => buildRef(node, index)}
+        ref={(node: any) => { getMap().set(index, node) ;}}
       />
     )
   };
