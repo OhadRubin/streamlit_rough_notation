@@ -5,6 +5,7 @@ import {
 } from "streamlit-component-lib"
 import React, { ReactNode } from "react"
 import { RoughNotation } from "react-rough-notation";
+import { Map } from "typescript";
 
 interface State {
   numClicks: number
@@ -13,11 +14,11 @@ interface State {
   is_selected: number
 }
 // here we need to modify to add the _ref
-class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_selected: boolean}> {
-  myRef: any = React.createRef();
+class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_selected: boolean, ref: React.RefObject<any>}> {
   constructor(props:any) {
     super(props);
-    this.state = { is_hovering: false, is_selected: false
+    this.state = {
+      is_hovering: false, is_selected: false, ref: React.createRef()
     };
   }
   private _onMouseClick = (index: any, onMouseClick: any) => {
@@ -25,15 +26,15 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
     this.setState({ is_selected: true });
     onMouseClick(index);
   }
-  componentDidMount() {
-    // Check if the `node` property is not null before calling the
-    // `scrollIntoView` method.
-    if (this.state.is_selected){
-      if (this.myRef) {
-        this.myRef.scrollIntoView();
-      }
-    }
-  }
+  // componentDidMount() {
+  //   // Check if the `node` property is not null before calling the
+  //   // `scrollIntoView` method.
+  //   if (this.state.is_selected){
+  //     if (this.myRef) {
+  //       this.myRef.scrollIntoView();
+  //     }
+  //   }
+  // }
   render() {
     const props:any = this.props;
     const is_hovering = this.state.is_hovering;
@@ -48,7 +49,7 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
     } = props;
     
     const _index_is_selected = index_is_selected()==index;
-    this.setState({ is_selected: _index_is_selected });
+    // this.setState({ is_selected: _index_is_selected });
     
     // if (_index_is_selected){
     //   console.log(this.myRef);
@@ -61,7 +62,7 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
 
     
     return (<span>
-      <RoughNotation {...rest} type='underline' ref={this.myRef}
+      <RoughNotation {...rest} type='underline' ref={this.state.ref}
         onMouseEnter={() => this.setState({ is_hovering: true })}
         onMouseLeave={() => this.setState({ is_hovering: false })}
         onClick={() => this._onMouseClick(index, onMouseClick)}
@@ -74,15 +75,38 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
 
 
 class MyComponent extends StreamlitComponentBase<State> {
-  public state = { numClicks: 0, isFocused: false, is_hovering: -1 , is_selected: -1 }; 
+  // ref_list: React.Ref = [];
+  public state = { numClicks: 0, isFocused: false, is_hovering: -1, is_selected: -1, itemsRef: React.useRef(new Map()) }; 
+  
+
+  private scrollToId(itemId: any) {
+    const node = this.getMap().get(itemId);
+    node.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center'
+    });
+  }
+  private getMap(){
+    return this.state.itemsRef.current;
+  }
+  private buildRef(node: any, index: any) {
+    let map = this.getMap()
+    if (node) {
+      map.set(index, node);
+    } else {
+      map.delete(index);
+    }
+  }
   private get_is_selected = () => {
     return this.state.is_selected;
   }
   private set_is_selected = (i: any) => {
-    if (i>=0){
+    if (i >= 0) {
       this.setState({ is_selected: i });
+      this.scrollToId(i);
     }
-    
+
   }
   public render = (): ReactNode => {
 
@@ -116,9 +140,10 @@ class MyComponent extends StreamlitComponentBase<State> {
       iterations:1,
       multiline:true,
       onMouseClick: this.onClicked,
-      
-
     };
+
+
+
     const func = (value: string, index: any) => 
     {
       const rest = {
@@ -128,15 +153,20 @@ class MyComponent extends StreamlitComponentBase<State> {
          ...props 
       };
       return (
-        <MyRoughNotation {...rest} />
-    )}
+        <MyRoughNotation {...rest} 
+          key={index} ref={(node) => this.buildRef(node, index)}
+        />
+    )};
+    
     return values.map(func);
   }
 
   private onClicked = (i: any) => {
     this.setState(
       prevState => ({ is_selected: i }),
-      () => Streamlit.setComponentValue(this.state.is_selected)
+      () => {
+        Streamlit.setComponentValue(this.state.is_selected);
+      }
     )
   }
 }
