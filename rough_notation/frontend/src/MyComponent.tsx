@@ -46,7 +46,7 @@ function MyRoughNotation(props: any){
 
 export function HigherFunc(props:any) {
   const { values: values, query_is_selected: query_is_selected, _props: _props, set_my_hook: set_my_hook } = props;
-  const [has_set_hook, setHook] = React.useState(false);
+  const [has_set_hook, setHook] = React.useState(0);
   const itemsRef:any = React.useRef(null);
   function scrollToId(itemId: any) {
     const map = getMap();
@@ -89,9 +89,9 @@ export function HigherFunc(props:any) {
     )
   };
   const res = values.map(_func)
-  if (!has_set_hook){
+  if (has_set_hook<1000){
     set_my_hook(scrollToId);
-    setHook(true);
+    setHook(has_set_hook+1);
   }
   
 
