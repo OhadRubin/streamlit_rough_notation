@@ -46,7 +46,7 @@ function MyRoughNotation(props: any){
 function HigherFunc(props:any) {
   const { values: values, query_is_selected: query_is_selected, _props: _props, set_my_hook: set_my_hook } = props;
   
-  const itemsRef = React.useRef(new Map());
+  const itemsRef = React.useRef(null);
   function scrollToId(itemId: any) {
     const node = getMap().get(itemId);
     node.scrollIntoView({
@@ -56,6 +56,10 @@ function HigherFunc(props:any) {
     });
   }
   function getMap() {
+    if (!itemsRef.current) {
+      // Initialize the Map on first usage.
+      itemsRef.current = new Map();
+    }
     return itemsRef.current;
   }
   function buildRef(node: any, index: any) {
@@ -80,7 +84,7 @@ function HigherFunc(props:any) {
       />
     )
   };
-  set_my_hook(scrollToId);
+  // set_my_hook(scrollToId);
   return (<span>{values.map(_func)}</span>)
 }
 
