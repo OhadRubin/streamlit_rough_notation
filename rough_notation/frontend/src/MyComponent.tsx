@@ -76,7 +76,10 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
 
 class MyComponent extends StreamlitComponentBase<State> {
   // ref_list: React.Ref = [];
-  public state = { numClicks: 0, isFocused: false, is_hovering: -1, is_selected: -1, itemsRef: React.useRef(new Map()) }; 
+  // public itemsRef =  React.useRef(null) 
+  public state = { numClicks: 0, isFocused: false, is_hovering: -1, is_selected: -1, itemsRef: React.useRef(new Map()) 
+     
+    }; 
   
 
   private scrollToId(itemId: any) {
@@ -88,6 +91,7 @@ class MyComponent extends StreamlitComponentBase<State> {
     });
   }
   private getMap(){
+    // this.itemsRef.current.
     return this.state.itemsRef.current;
   }
   private buildRef(node: any, index: any) {
