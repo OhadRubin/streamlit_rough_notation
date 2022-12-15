@@ -7,7 +7,7 @@ __pycache__/
 *$py.class
 
 # Distribution / packaging
-build/
+# build/
 dist/
 eggs/
 .eggs/
@@ -48,7 +48,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Dependency directories
-node_modules/
+# node_modules/
 
 # Coverage directory used by tools like istanbul
 coverage/
