@@ -82,7 +82,7 @@ class MyComponent extends StreamlitComponentBase<State> {
     }; 
   
 
-  private scrollToId(itemId: any) {
+  public scrollToId(itemId: any) {
     const node = this.getMap().get(itemId);
     node.scrollIntoView({
       behavior: 'smooth',
@@ -90,11 +90,11 @@ class MyComponent extends StreamlitComponentBase<State> {
       inline: 'center'
     });
   }
-  private getMap(){
+  public getMap(){
     // this.itemsRef.current.
     return this.state.itemsRef.current;
   }
-  private buildRef(node: any, index: any) {
+  public buildRef(node: any, index: any) {
     let map = this.getMap()
     if (node) {
       map.set(index, node);
