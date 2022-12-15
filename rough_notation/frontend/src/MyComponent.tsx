@@ -12,20 +12,24 @@ interface State {
   is_hovering: number
   is_selected: number
 }
-
-class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_selected: boolean, ref: any}> {
+// here we need to modify to add the _ref
+class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_selected: boolean}> {
+  node: any;
   constructor(props:any) {
     super(props);
-    this.state = { is_hovering: false, is_selected: false, ref: React.useRef(null) };
-    // const inputEl = ;
-
-
+    this.state = { is_hovering: false, is_selected: false
+    };
+    this.node = React.createRef();
+  }
+  componentDidMount() {
+    this.node.scrollIntoView();
   }
   private _onMouseClick = (index: any, onMouseClick: any) => {
 
     this.setState({ is_selected: true });
     onMouseClick(index);
   }
+
   render() {
     const props:any = this.props;
     const is_hovering = this.state.is_hovering;
@@ -40,12 +44,11 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
     } = props;
     
     const _index_is_selected = index_is_selected()==index;
-    // if we are selected, scroll into view
+    // if we are selected, scroll into view using react ref
     if (_index_is_selected){
-      // const a = React.useRef(this);
-      this.state.ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // a.current.
-      // .current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      this.node.current.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    
       
     }
     return (<span>
