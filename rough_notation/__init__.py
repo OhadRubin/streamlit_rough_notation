@@ -43,7 +43,7 @@ else:
 # `declare_component` and call it done. The wrapper allows us to customize
 # our component's API: we can pre-process its input args, post-process its
 # output value, and add a docstring for users.
-def rough_notation(name, default=0,key=None):
+def rough_notation(name, default=0,selected_index=None,key=None):
     """Create a new instance of "rough_notation".
 
     Parameters
@@ -70,8 +70,9 @@ def rough_notation(name, default=0,key=None):
     #
     # "default" is a special argument that specifies the initial return
     # value of the component before the user has interacted with it.
-    
-    component_value = _component_func(name=name, key=key, default=int(default))
+    if selected_index is None:
+        selected_index = int(default)
+    component_value = _component_func(name=name,selected_index=selected_index, key=key, default=int(default))
 
     # We could modify the value returned from the component if we wanted.
     # There's no need to do this in our simple example - but it's an option.

@@ -55,9 +55,13 @@ class MyComponent extends StreamlitComponentBase<State> {
   private get_is_selected = () => {
     return this.state.is_selected;
   }
+  private set_is_selected = (i: any) => {
+    this.setState({ is_selected: i });
+  }
   public render = (): ReactNode => {
 
     const name = this.props.args["name"]
+    this.set_is_selected(this.props.args["selected_index"])
 
     // Streamlit sends us a theme object via props that we can use to ensure
     // that our component has visuals that match the active theme in a
@@ -92,7 +96,10 @@ class MyComponent extends StreamlitComponentBase<State> {
     const func = (value: string, index: any) => 
     {
       const rest = {
-        value: value, index: index, index_is_selected: () => this.get_is_selected() , ...props 
+        value: value,
+        index: index,
+        index_is_selected: () => this.get_is_selected() ,
+         ...props 
       };
       return (
         <MyRoughNotation {...rest} />
