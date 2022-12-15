@@ -28,8 +28,10 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
   componentDidMount() {
     // Check if the `node` property is not null before calling the
     // `scrollIntoView` method.
-    if (this.myRef) {
-      this.myRef.scrollIntoView();
+    if (this.state.is_selected){
+      if (this.myRef) {
+        this.myRef.scrollIntoView();
+      }
     }
   }
   render() {
@@ -46,6 +48,7 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
     } = props;
     
     const _index_is_selected = index_is_selected()==index;
+    this.setState({ is_selected: _index_is_selected });
     
     // if (_index_is_selected){
     //   console.log(this.myRef);
