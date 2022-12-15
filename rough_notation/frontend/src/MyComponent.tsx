@@ -87,7 +87,7 @@ function HigherFunc(props:any) {
     )
   };
   const res = values.map(_func)
-  if (has_set_hook){
+  if (!has_set_hook){
     set_my_hook(scrollToId);
     setHook(true);
   }
