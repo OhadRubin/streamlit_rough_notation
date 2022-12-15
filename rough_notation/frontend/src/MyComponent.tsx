@@ -67,6 +67,8 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
         onMouseLeave={() => this.setState({ is_hovering: false })}
         onClick={() => this._onMouseClick(index, onMouseClick)}
         show={_index_is_selected || is_hovering} >
+        {value}
+
       </RoughNotation> &nbsp; 
        </span >
     )   
