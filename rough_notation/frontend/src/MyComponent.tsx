@@ -8,12 +8,11 @@ import { RoughNotation } from "react-rough-notation";
 import { Map } from "typescript";
 
 interface State {
-  numClicks: number
   isFocused: boolean
-  is_hovering: number
   is_selected: number
+  my_callback: any
 }
-// here we need to modify to add the _ref
+
 function MyRoughNotation(props: any){
   const [is_hovering_bool, setIsHovering] = React.useState(false);
     function _onMouseClick(index: any, onMouseClick: any){
@@ -44,36 +43,60 @@ function MyRoughNotation(props: any){
   }    
 
 
+function HigherFunc(props:any) {
+  const { values: values, query_is_selected: query_is_selected, _props: _props, set_my_hook: set_my_hook } = props;
+  
+  const itemsRef = React.useRef(new Map());
+  function scrollToId(itemId: any) {
+    const node = getMap().get(itemId);
+    node.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center'
+    });
+  }
+  function getMap() {
+    return itemsRef.current;
+  }
+  function buildRef(node: any, index: any) {
+    let map = getMap()
+    if (node) {
+      map.set(index, node);
+    } else {
+      map.delete(index);
+    }
+  }
+  const _func = (value: string, index: any) => {
+    const rest = {
+      value: value,
+      index: index,
+      index_is_selected: () => query_is_selected(),
+      ..._props
+    };
+    return (
+      <MyRoughNotation {...rest}
+      key={index} 
+      ref={(node:any) => buildRef(node, index)}
+      />
+    )
+  };
+  set_my_hook(scrollToId);
+  return (<span>{values.map(_func)}</span>)
+}
+
+
+
 
 class MyComponent extends StreamlitComponentBase<State> {
   // ref_list: React.Ref = [];
   // public itemsRef =  React.useRef(null) 
-  public state = { numClicks: 0, isFocused: false, is_hovering: -1, is_selected: -1, 
+  public state = {
+    isFocused: false, is_selected: -1, my_callback: (i: any) => { }
     // itemsRef: React.useRef(new Map()) 
      
     }; 
   
 
-  // public scrollToId(itemId: any) {
-  //   const node = this.getMap().get(itemId);
-  //   node.scrollIntoView({
-  //     behavior: 'smooth',
-  //     block: 'nearest',
-  //     inline: 'center'
-  //   });
-  // }
-  // public getMap(){
-  //   // this.itemsRef.current.
-  //   return this.state.itemsRef.current;
-  // }
-  // public buildRef(node: any, index: any) {
-  //   let map = this.getMap()
-  //   if (node) {
-  //     map.set(index, node);
-  //   } else {
-  //     map.delete(index);
-  //   }
-  // }
 
   private get_is_selected = () => {
     return this.state.is_selected;
@@ -81,27 +104,29 @@ class MyComponent extends StreamlitComponentBase<State> {
   private set_is_selected = (i: any) => {
     if (i >= 0) {
       this.setState({ is_selected: i });
-      // this.scrollToId(i);
+      this.state.my_callback(i);
     }
-
+  }
+  private set_my_hook = (setIDX: any) => {
+    this.setState({ my_callback: setIDX });
+  }
+  private onClicked = (i: any) => {
+    this.setState(
+      prevState => ({ is_selected: i }),
+      () => {
+        Streamlit.setComponentValue(this.state.is_selected);
+      }
+    )
   }
   public render = (): ReactNode => {
 
     const name = this.props.args["name"]
     this.set_is_selected(this.props.args["selected_index"])
 
-    // Streamlit sends us a theme object via props that we can use to ensure
-    // that our component has visuals that match the active theme in a
-    // streamlit app.
     const { theme } = this.props
     const style: React.CSSProperties = {}
-    console.log("rerendered");
 
-    // Maintain compatibility with older versions of Streamlit that don't send
-    // a theme object.
     if (theme) {
-      // Use the theme object to style our button border. Alternatively, the
-      // theme style is defined in CSS vars.
       const borderStyling = `1px solid ${
         this.state.isFocused ? theme.primaryColor : "gray"
       }`
@@ -118,35 +143,12 @@ class MyComponent extends StreamlitComponentBase<State> {
       multiline:true,
       onMouseClick: this.onClicked,
     };
-
-
-
-    const func = (value: string, index: any) => 
-    {
-      const rest = {
-        value: value,
-        index: index,
-        index_is_selected: () => this.get_is_selected() ,
-         ...props 
-      };
-      return (
-        <MyRoughNotation {...rest} 
-          // key={index} 
-          // ref={(node) => this.buildRef(node, index)}
-        />
-    )};
     
-    return values.map(func);
+    
+    return <HigherFunc values={values} query_is_selected={this.get_is_selected} _props={props} set_my_hook={this.set_my_hook}></HigherFunc>;
+
   }
 
-  private onClicked = (i: any) => {
-    this.setState(
-      prevState => ({ is_selected: i }),
-      () => {
-        Streamlit.setComponentValue(this.state.is_selected);
-      }
-    )
-  }
 }
 
 export default withStreamlitConnection(MyComponent)
