@@ -89,11 +89,11 @@ export function HigherFunc(props:any) {
     )
   };
   const res = values.map(_func)
-  if (has_set_hook<10){
-    set_my_hook(scrollToId);
-    setHook(has_set_hook+1);
-  }
   
+  useEffect(() => {
+    set_my_hook(scrollToId);}, [has_set_hook]
+
+  );
 
   return (<span>{res}</span>)
 }
