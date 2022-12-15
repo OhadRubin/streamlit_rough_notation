@@ -53,11 +53,14 @@ export function HigherFunc(props:any) {
     const node:any = map.get(itemId);
     console.log(map);
     console.log(node);
-    node.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'center'
-    });
+    if (node) {
+      node.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+    }
+    
   }
   function getMap() {
     if (!itemsRef.current) {
