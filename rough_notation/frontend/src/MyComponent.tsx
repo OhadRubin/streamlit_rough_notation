@@ -14,18 +14,23 @@ interface State {
 }
 // here we need to modify to add the _ref
 class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_selected: boolean}> {
-  node: any;
+  myRef: any = React.createRef();
   constructor(props:any) {
     super(props);
     this.state = { is_hovering: false, is_selected: false
     };
-    this.node = React.useRef(null);
   }
-
   private _onMouseClick = (index: any, onMouseClick: any) => {
-
+    
     this.setState({ is_selected: true });
     onMouseClick(index);
+  }
+  componentDidMount() {
+    // Check if the `node` property is not null before calling the
+    // `scrollIntoView` method.
+    if (this.myRef) {
+      this.myRef.scrollIntoView();
+    }
   }
   render() {
     const props:any = this.props;
@@ -42,19 +47,24 @@ class MyRoughNotation extends React.Component<{}, { is_hovering: boolean, is_sel
     
     const _index_is_selected = index_is_selected()==index;
     
-    if (_index_is_selected){
-      console.log(this.node);
-      // this.node.current.focus();  
-      this.node.current.scrollIntoView({ behavior: "auto", block: "center", inline: "center" });
-    }
+    // if (_index_is_selected){
+    //   console.log(this.myRef);
+    //   // this.myRef.current.focus();  
+    //   this.myRef.current.scrollIntoView({ behavior: "auto", block: "center", inline: "center" });
+    // }
+
+
+    
+
+    
     return (<span>
-      <RoughNotation {...rest} type='underline'
+      <RoughNotation {...rest} type='underline' ref={this.myRef}
         onMouseEnter={() => this.setState({ is_hovering: true })}
         onMouseLeave={() => this.setState({ is_hovering: false })}
         onClick={() => this._onMouseClick(index, onMouseClick)}
         show={_index_is_selected || is_hovering} >
-      </RoughNotation> &nbsp;  <div ref={this.node}>
-      </div>  </span>
+      </RoughNotation> &nbsp; 
+       </span >
     )   
   }    
 }
