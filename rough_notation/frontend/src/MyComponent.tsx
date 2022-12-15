@@ -56,7 +56,10 @@ class MyComponent extends StreamlitComponentBase<State> {
     return this.state.is_selected;
   }
   private set_is_selected = (i: any) => {
-    this.setState({ is_selected: i });
+    if (i>0){
+      this.setState({ is_selected: i });
+    }
+    
   }
   public render = (): ReactNode => {
 
