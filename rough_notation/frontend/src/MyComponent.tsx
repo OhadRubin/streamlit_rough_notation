@@ -160,7 +160,7 @@ class MyComponent extends StreamlitComponentBase<State> {
       };
       return (
         <MyRoughNotation {...rest} 
-          key={index} 
+          // key={index} 
           // ref={(node) => this.buildRef(node, index)}
         />
     )};
