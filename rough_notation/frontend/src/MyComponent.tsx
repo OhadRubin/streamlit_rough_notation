@@ -64,23 +64,17 @@ export function HigherFunc(props:any) {
   }
   function getMap() {
     if (!itemsRef.current) {
-      // Initialize the Map on first usage.
       itemsRef.current = new Map();
     }
     return itemsRef.current;
   }
   function buildRef(node: any, index: any) {
-    console.log("ref called with index=" + index);
     const map = getMap();
     if (node) {
       map.set(index, node);
     }
   }
-  function set_ref(index:any,node: any) {{
-      
-      getMap().set(index, node);
-    }
-  }
+
   const _func = (value: string, index: any) => {
     const rest = {
       value: value,
@@ -123,7 +117,7 @@ class MyComponent extends StreamlitComponentBase<State> {
     if (i >= 0) {
       this.state.my_callback(this.state.is_selected);
       this.setState({ is_selected: i });
-      console.log("set_is_selected with parameter i=" + i)
+      // console.log("set_is_selected with parameter i=" + i)
     }
   }
   private set_my_hook = (setIDX: any) => {
@@ -143,7 +137,9 @@ class MyComponent extends StreamlitComponentBase<State> {
   public render = (): ReactNode => {
 
     const name = this.props.args["name"]
-    this.set_is_selected(this.props.args["selected_index"])
+    if (this.props.args["selected_index"] != this.state.is_selected){
+      this.set_is_selected(this.props.args["selected_index"]);
+    }
 
     const { theme } = this.props
     const style: React.CSSProperties = {}

@@ -1,0 +1,1 @@
+cd rough_notation/frontend && npm run build && git add -A && git commit -a -m "working" && git push && pip3 install --force-reinstall --no-deps git+https://github.com/OhadRubin/streamlit_rough_notation
