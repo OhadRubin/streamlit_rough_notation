@@ -142,6 +142,7 @@ class MyComponent extends StreamlitComponentBase<State> {
   public render = (): ReactNode => {
     const name = this.props.args["name"]
     this.set_is_selected(this.props.args["selected_index"])
+    this.state.my_callback(this.state.is_selected);
     // if (this.props.args["selected_index"] != this.state.is_selected){
     // }
     
