@@ -116,7 +116,7 @@ class MyComponent extends StreamlitComponentBase<State> {
   private set_is_selected = (i: any) => {
     if (i >= 0) {
       this.setState({ is_selected: i });
-      this.state.my_callback(this.state.is_selected);
+      // this.state.my_callback(this.state.is_selected);
       // console.log("set_is_selected with parameter i=" + i)
     }
   }
@@ -128,18 +128,23 @@ class MyComponent extends StreamlitComponentBase<State> {
     this.setState(
       prevState => ({ is_selected: i }),
       () => {
-        this.state.my_callback(this.state.is_selected);
+        // this.state.my_callback(i);
         Streamlit.setComponentValue(this.state.is_selected);
       }
     )
     // this.state.my_callback(this.state.is_selected);
   }
+  public componentDidUpdate(): void {
+    this.state.my_callback(this.state.is_selected);
+    
+  }
   public render = (): ReactNode => {
 
     const name = this.props.args["name"]
+    this.set_is_selected(this.props.args["selected_index"])
     // if (this.props.args["selected_index"] != this.state.is_selected){
     // }
-    this.state.my_callback(this.props.args["selected_index"]);
+    
 
     const { theme } = this.props
     const style: React.CSSProperties = {}
