@@ -138,7 +138,7 @@ class MyComponent extends StreamlitComponentBase<State> {
         Streamlit.setComponentValue(this.state.is_selected);
       }
     )
-    this.state.my_callback(this.state.is_selected);
+    // this.state.my_callback(this.state.is_selected);
   }
   public render = (): ReactNode => {
 
