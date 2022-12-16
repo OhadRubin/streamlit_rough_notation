@@ -121,9 +121,9 @@ class MyComponent extends StreamlitComponentBase<State> {
   }
   private set_is_selected = (i: any) => {
     if (i >= 0) {
+      this.state.my_callback(this.state.is_selected);
       this.setState({ is_selected: i });
       console.log("set_is_selected with parameter i=" + i)
-      this.state.my_callback(this.state.is_selected);
     }
   }
   private set_my_hook = (setIDX: any) => {
