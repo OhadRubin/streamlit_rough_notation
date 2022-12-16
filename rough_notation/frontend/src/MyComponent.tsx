@@ -54,6 +54,7 @@ export function HigherFunc(props:any) {
     console.log(map);
     console.log(node);
     if (node) {
+      node.focus();
       node.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
