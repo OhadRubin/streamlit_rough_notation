@@ -56,7 +56,7 @@ export function HigherFunc(props:any) {
     if (node) {
       node.focus();
       node.scrollIntoView({
-        behavior: 'smooth',
+        behavior: 'auto',
         block: 'nearest',
         inline: 'center'
       });
