@@ -121,10 +121,10 @@ class MyComponent extends StreamlitComponentBase<State> {
       this.setState(
         prevState => ({ is_selected: i }),
         () => {
-          this.state.my_callback(this.state.is_selected);
-          Streamlit.setComponentValue(this.state.is_selected);
+          Streamlit.setComponentValue(i);
         }
         )
+        this.state.my_callback(this.state.is_selected);
         // this.state.my_callback(this.state.is_selected);
     }
     
@@ -159,7 +159,8 @@ class MyComponent extends StreamlitComponentBase<State> {
       strokeWidth: 2,
       iterations:1,
       multiline:true,
-      onMouseClick: this.set_is_selected,
+      // onMouseClick: this.set_is_selected,
+      onMouseClick: (i: any) => {},
     };
     
     
