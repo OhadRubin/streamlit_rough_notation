@@ -19,6 +19,6 @@ setuptools.setup(
         # By definition, a Custom Component depends on Streamlit.
         # If your component has other Python dependencies, list
         # them here.
-        "streamlit >= 0.63",
+        "streamlit == 1.24.1",
     ],
 )
